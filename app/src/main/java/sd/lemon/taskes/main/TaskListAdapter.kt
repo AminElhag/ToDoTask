@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import sd.lemon.domain.taskes.TasksModules
+import sd.lemon.domain.taskes.modules.TasksModules
 import sd.lemon.taskes.R
 
 class TaskListAdapter(private val taskModules: List<TasksModules>) :
