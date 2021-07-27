@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Taskes</string>
+    <string name="title">Title</string>
+    <string name="body">Body</string>
 </resources>
