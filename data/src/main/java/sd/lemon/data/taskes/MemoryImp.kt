@@ -10,7 +10,7 @@ import sd.lemon.domain.taskes.models.Task
 
 class MemoryImp : TasksRepository {
 
-    var tasks: MutableList<Task> = mutableListOf();
+    var tasks: MutableList<Task> = mutableListOf()
     var id: Int = 0
 
     override fun getTasks(parameters: GetTasksUseCase.Parameters): Observable<List<Task>> {
