@@ -6,11 +6,18 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import sd.lemon.domain.taskes.modules.TasksModules
+import sd.lemon.domain.taskes.models.Task
 import sd.lemon.taskes.R
 
-class TaskListAdapter(private val taskModules: List<TasksModules>) :
-    RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
+class TaskListAdapter(private val taskModules: List<Task>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    companion object {
+        private const val VIEW_TYPE_ITEM = 1
+        private const val VIEW_TYPE_SHIMMER = 2
+    }
+
+    private val items = mutableListOf<Task?>()
 
     lateinit var action: OnActionsListener
 
@@ -18,38 +25,51 @@ class TaskListAdapter(private val taskModules: List<TasksModules>) :
         this.action = listener
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textViewTaskTitle: TextView = view.findViewById(R.id.textViewTaskTitle)
-        val textViewTaskBody: TextView = view.findViewById(R.id.textViewTaskBody)
-        val imageButtonTask: ImageButton = view.findViewById(R.id.imageButtonTask)
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        //TODO update as Shimmer view
+        /** return if (viewType == VIEW_TYPE_ITEM){
+        TaskViewHolder( LayoutInflater.from(parent.context).inflate(R.layout.task_list, parent, false))
+        }else{
+        ShimmerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.shimmer_list, parent, false))
+        }*/
+        return TaskViewHolder(LayoutInflater.from(parent.context)
+            .inflate(R.layout.task_list, parent, false))
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val adapter =
-            LayoutInflater.from(parent.context).inflate(R.layout.task_list, parent, false)
 
-        return ViewHolder(adapter)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+        //TODO Shimmer view
+        if (viewHolder is TaskViewHolder) {
         val item = taskModules[position]
-        holder.textViewTaskTitle.text = item.title
-        holder.textViewTaskBody.text = item.body
-
-        if (item.completed) {
-            holder.imageButtonTask.setImageResource(R.drawable.ic_baseline_mood_24)
-        } else {
-            holder.imageButtonTask.setImageResource(R.drawable.ic_baseline_mood_bad_24)
+        viewHolder.textViewTaskTitle.text = item.title
+        viewHolder.textViewTaskBody.text = item.body
         }
+    }
+
+    fun showLoading() {
+        items.addAll(listOf(null, null, null, null))
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (items[position] == null)
+            VIEW_TYPE_SHIMMER
+        else
+            VIEW_TYPE_ITEM
     }
 
     override fun getItemCount(): Int {
         return taskModules.size
     }
 
-    interface OnActionsListener {
-        fun onClick(task: TasksModules)
+
+    class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textViewTaskTitle: TextView = view.findViewById(R.id.textViewTaskTitle)
+        val textViewTaskBody: TextView = view.findViewById(R.id.textViewTaskBody)
     }
 
+    class ShimmerViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+    interface OnActionsListener {
+        fun onClick(task: Task)
+    }
 }
