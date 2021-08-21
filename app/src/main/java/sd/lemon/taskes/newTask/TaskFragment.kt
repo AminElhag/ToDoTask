@@ -14,6 +14,11 @@ import sd.lemon.taskes.R
 class TaskFragment : Fragment(), TaskView {
 
     lateinit var presenter: TaskPresenter
+    private lateinit var listener: OnActionsListener
+
+    fun setOnActionsListener(actions: OnActionsListener) {
+        this.listener = actions
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +28,6 @@ class TaskFragment : Fragment(), TaskView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_task, container, false)
     }
 
@@ -36,13 +40,8 @@ class TaskFragment : Fragment(), TaskView {
             view.findViewById<FloatingActionButton>(R.id.floatingActionButtonTask)
 
         completeEditButton.setOnClickListener {
-            if (presenter.dataIsComplete(titleText.text.toString(), bodyText.text.toString())) {
-                presenter.addTask(titleText.text.toString(), bodyText.text.toString())
-            } else {
-                Snackbar.make(view.findViewById(android.R.id.content),
-                    "Can't create a empty taskヾ(￣▽￣) Bye~Bye~",
-                    Snackbar.LENGTH_LONG).show()
-            }
+            presenter.addTask(titleText.text.toString(), bodyText.text.toString())
+
         }
     }
 
@@ -56,5 +55,17 @@ class TaskFragment : Fragment(), TaskView {
                 "Sorry Something is Wring ≧ ﹏ ≦ \n Error message:$throwable",
                 Snackbar.LENGTH_LONG).show()
         }
+    }
+
+    override fun empty() {
+        view?.let {
+            Snackbar.make(it.findViewById(android.R.id.content),
+                "Can't create a empty taskヾ(￣▽￣) Bye~Bye~",
+                Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    interface OnActionsListener {
+        fun actionHappen(index: Int)
     }
 }

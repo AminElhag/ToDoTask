@@ -19,6 +19,9 @@ class TaskPresenter(
     }
 
     fun addTask(title: String, body: String) {
+        if (title.isEmpty() || body.isEmpty()) {
+            view.empty()
+        }
         val subscribe =
             createTaskUseCase.execute(CreateTaskUseCase.Parameters(title, body, completed = false))
                 .subscribeOn(Schedulers.io())
