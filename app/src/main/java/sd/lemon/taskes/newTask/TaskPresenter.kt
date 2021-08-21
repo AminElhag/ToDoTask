@@ -11,13 +11,6 @@ class TaskPresenter(
 ) {
     private val compositeDisposable = CompositeDisposable()
 
-    fun dataIsComplete(title: String, body: String): Boolean {
-        if (title.isEmpty() || body.isEmpty()) {
-            return false
-        }
-        return true
-    }
-
     fun addTask(title: String, body: String) {
         if (title.isEmpty() || body.isEmpty()) {
             view.empty()

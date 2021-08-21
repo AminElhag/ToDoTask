@@ -1,11 +1,11 @@
 package sd.lemon.taskes.newTask
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import sd.lemon.taskes.R
@@ -14,15 +14,6 @@ import sd.lemon.taskes.R
 class TaskFragment : Fragment(), TaskView {
 
     lateinit var presenter: TaskPresenter
-    private lateinit var listener: OnActionsListener
-
-    fun setOnActionsListener(actions: OnActionsListener) {
-        this.listener = actions
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +37,11 @@ class TaskFragment : Fragment(), TaskView {
     }
 
     override fun addTask() {
-        TODO("Not yet implemented")
+        view?.let {
+            Snackbar.make(it.findViewById(android.R.id.content),
+                "You add new task Good Luke o(≧∀≦)o",
+                Snackbar.LENGTH_LONG).show()
+        }
     }
 
     override fun getError(throwable: Throwable) {
@@ -65,7 +60,4 @@ class TaskFragment : Fragment(), TaskView {
         }
     }
 
-    interface OnActionsListener {
-        fun actionHappen(index: Int)
-    }
 }

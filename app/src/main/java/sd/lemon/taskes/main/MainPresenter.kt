@@ -38,6 +38,6 @@ class MainPresenter(
     }
 
     fun showDialog() {
-        view.taskDialog()
+        view.taskFragment()
     }
 }
