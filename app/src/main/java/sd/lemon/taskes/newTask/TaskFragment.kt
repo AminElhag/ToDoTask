@@ -46,11 +46,7 @@ class TaskFragment : Fragment(), TaskView {
             Snackbar.make(it.findViewById(android.R.id.content),
                 "You add new task Good Luke o(≧∀≦)o",
                 Snackbar.LENGTH_LONG).show()
-
-            val fragmentManager: FragmentManager = parentFragmentManager
-            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.remove(this)
-            fragmentTransaction.commit()
+            exit()
         }
     }
 
@@ -67,7 +63,15 @@ class TaskFragment : Fragment(), TaskView {
             Snackbar.make(it.findViewById(android.R.id.content),
                 "Can't create a empty taskヾ(￣▽￣) Bye~Bye~",
                 Snackbar.LENGTH_LONG).show()
+            exit()
         }
+    }
+
+    override fun exit() {
+        val fragmentManager: FragmentManager = parentFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.remove(this)
+        fragmentTransaction.commit()
     }
 
 }
