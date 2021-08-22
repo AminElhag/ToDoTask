@@ -12,6 +12,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import sd.lemon.domain.taskes.models.Task
 import sd.lemon.taskes.R
+import sd.lemon.taskes.app.App
+import sd.lemon.taskes.newTask.di.DaggerTaskComponent
+import sd.lemon.taskes.newTask.di.TaskModule
 import javax.inject.Inject
 
 
@@ -34,7 +37,6 @@ class TaskFragment : Fragment(), TaskView {
 
     @Inject
     lateinit var presenter: TaskPresenter
-    //TODO("Inject")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +53,11 @@ class TaskFragment : Fragment(), TaskView {
         val completeEditButton =
             view.findViewById<FloatingActionButton>(R.id.floatingActionButtonTask)
 
+        DaggerTaskComponent.builder()
+            .appComponent((activity?.application as App).appComponent)
+            .taskModule(TaskModule(this))
+            .build()
+            .inject(this)
 
         if (arguments?.containsKey("x") == true) {
             val serializableTask = requireArguments().getSerializable("") as Task
@@ -110,4 +117,8 @@ class TaskFragment : Fragment(), TaskView {
         exit()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
 }

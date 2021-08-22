@@ -9,6 +9,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import sd.lemon.domain.taskes.models.Task
 import sd.lemon.taskes.R
+import sd.lemon.taskes.app.App
+import sd.lemon.taskes.main.di.DaggerMainComponent
+import sd.lemon.taskes.main.di.MainModule
 import sd.lemon.taskes.newTask.TaskFragment
 import javax.inject.Inject
 
@@ -21,7 +24,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
     @Inject
     lateinit var presenter: MainPresenter
-    //TODO("inject")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +32,14 @@ class MainActivity : AppCompatActivity(), MainView {
 
         recyclerView = findViewById(R.id.recyclerView)
         floatingActionButton = findViewById(R.id.floatingActionButton)
+
+        DaggerMainComponent
+            .builder()
+            .appComponent((application as App).appComponent)
+            .mainModule(MainModule(this))
+            .build()
+            .inject(this)
+
 
         presenter.getTask()
         floatingActionButton.setOnClickListener {
@@ -80,4 +91,8 @@ class MainActivity : AppCompatActivity(), MainView {
             Snackbar.LENGTH_LONG).show()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
 }

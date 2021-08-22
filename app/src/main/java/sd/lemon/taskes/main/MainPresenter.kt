@@ -53,4 +53,8 @@ class MainPresenter(
             })
         compositeDisposable.add(subscribe)
     }
+
+    fun onDestroy() {
+        compositeDisposable.clear()
+    }
 }
