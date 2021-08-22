@@ -39,9 +39,13 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun getTasks(taskList: List<Task>) {
         recyclerTaskAdapter = TaskListAdapter(taskList)
-        recyclerTaskAdapter.setOnActionsListener(object :TaskListAdapter.OnActionsListener{
+        recyclerTaskAdapter.setOnActionsListener(object : TaskListAdapter.OnActionsListener {
             override fun onClick(task: Task) {
                 taskFragment(task)
+            }
+
+            override fun onLongClick(task: Task) {
+                presenter.deleteTask(task)
             }
         })
     }
@@ -68,6 +72,12 @@ class MainActivity : AppCompatActivity(), MainView {
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(android.R.id.content, TaskFragment.getTaskInstance(task))
         fragmentTransaction.commit()
+    }
+
+    override fun deleteTask() {
+        Snackbar.make(findViewById(android.R.id.content),
+            "Task delete ╯︿╰",
+            Snackbar.LENGTH_LONG).show()
     }
 
 }

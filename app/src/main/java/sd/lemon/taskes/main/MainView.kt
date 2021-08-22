@@ -8,4 +8,5 @@ interface MainView {
     fun addTask()
     fun taskFragment()
     fun taskFragment(task: Task)
+    fun deleteTask()
 }

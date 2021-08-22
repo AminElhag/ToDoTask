@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import sd.lemon.data.taskes.MemoryImp
 import sd.lemon.domain.taskes.CreateTaskUseCase
+import sd.lemon.domain.taskes.DeleteTaskUseCase
 import sd.lemon.domain.taskes.GetTasksUseCase
 import sd.lemon.domain.taskes.TasksRepository
 import sd.lemon.taskes.app.id.PerActivity
@@ -21,6 +22,12 @@ class MainModule(private val view: MainView) {
 
     @Provides
     @PerActivity
+    fun provideDeleteTaskUseCase(tasksRepository: TasksRepository): DeleteTaskUseCase =
+        DeleteTaskUseCase(tasksRepository)
+
+
+    @Provides
+    @PerActivity
     fun provideCreateTaskUseCase(tasksRepository: TasksRepository): CreateTaskUseCase =
         CreateTaskUseCase(tasksRepository)
 
@@ -34,7 +41,8 @@ class MainModule(private val view: MainView) {
     fun provideMainPresenter(
         getTasksUseCase: GetTasksUseCase,
         createTaskUseCase: CreateTaskUseCase,
+        deleteTaskUseCase: DeleteTaskUseCase,
     ): MainPresenter =
-        MainPresenter(view, getTasksUseCase, createTaskUseCase)
+        MainPresenter(view, getTasksUseCase, createTaskUseCase, deleteTaskUseCase)
 
 }

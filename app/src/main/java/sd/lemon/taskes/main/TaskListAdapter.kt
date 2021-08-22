@@ -25,6 +25,7 @@ class TaskListAdapter(private val taskModules: List<Task>) :
         this.action = listener
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         //TODO update as Shimmer view
         /** return if (viewType == VIEW_TYPE_ITEM){
@@ -45,6 +46,11 @@ class TaskListAdapter(private val taskModules: List<Task>) :
             viewHolder.textViewTaskBody.text = item.body
             viewHolder.itemView.setOnClickListener {
                 action.onClick(taskModules[position])
+            }
+            viewHolder.itemView.setOnLongClickListener {
+                action.onLongClick(taskModules[position])
+
+                return@setOnLongClickListener true
             }
         }
     }
@@ -74,5 +80,6 @@ class TaskListAdapter(private val taskModules: List<Task>) :
 
     interface OnActionsListener {
         fun onClick(task: Task)
+        fun onLongClick(task: Task)
     }
 }
