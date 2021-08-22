@@ -2,7 +2,6 @@ package sd.lemon.taskes.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -19,10 +18,11 @@ class MainActivity : AppCompatActivity(), MainView {
     private lateinit var recyclerTaskAdapter: TaskListAdapter
     private lateinit var floatingActionButton: FloatingActionButton
 
-    private val fragment = TaskFragment()
+    private val taskFragment = TaskFragment()
 
     @Inject
     lateinit var presenter: MainPresenter
+    //TODO("inject")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun taskFragment() {
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(android.R.id.content, fragment)
+        fragmentTransaction.replace(android.R.id.content, taskFragment)
         fragmentTransaction.commit()
     }
 }

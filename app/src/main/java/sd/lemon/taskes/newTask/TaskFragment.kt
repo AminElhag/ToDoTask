@@ -6,14 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import sd.lemon.taskes.R
+import javax.inject.Inject
 
 
 class TaskFragment : Fragment(), TaskView {
 
+    @Inject
     lateinit var presenter: TaskPresenter
+    //TODO("Inject")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +46,11 @@ class TaskFragment : Fragment(), TaskView {
             Snackbar.make(it.findViewById(android.R.id.content),
                 "You add new task Good Luke o(≧∀≦)o",
                 Snackbar.LENGTH_LONG).show()
+
+            val fragmentManager: FragmentManager = parentFragmentManager
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.remove(this)
+            fragmentTransaction.commit()
         }
     }
 
