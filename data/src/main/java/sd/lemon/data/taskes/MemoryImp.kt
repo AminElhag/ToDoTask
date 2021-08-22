@@ -2,10 +2,7 @@ package sd.lemon.data.taskes
 
 import io.reactivex.Completable
 import io.reactivex.Observable
-import sd.lemon.domain.taskes.CreateTaskUseCase
-import sd.lemon.domain.taskes.GetTaskByIdUseCase
-import sd.lemon.domain.taskes.GetTasksUseCase
-import sd.lemon.domain.taskes.TasksRepository
+import sd.lemon.domain.taskes.*
 import sd.lemon.domain.taskes.models.Task
 
 class MemoryImp : TasksRepository {
@@ -30,5 +27,14 @@ class MemoryImp : TasksRepository {
     override fun deleteTask(id: Int): Completable {
         tasks.removeAt(id)
         return Completable.complete()
+    }
+
+    override fun updateTask(parameters: UpdateTaskUseCase.Parameters): Observable<Task> {
+        tasks[parameters.id] = Task(title = parameters.title,
+            body = parameters.body,
+            completed = parameters.completed,
+            id = parameters.id
+        )
+        return Observable.just(tasks[parameters.id])
     }
 }
