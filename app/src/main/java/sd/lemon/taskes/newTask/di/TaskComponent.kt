@@ -1,4 +1,4 @@
-package sd.lemon.taskes.newTask.id
+package sd.lemon.taskes.newTask.di
 
 import dagger.Component
 import sd.lemon.taskes.app.id.AppComponent

@@ -40,9 +40,12 @@ class TaskListAdapter(private val taskModules: List<Task>) :
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         //TODO Shimmer view
         if (viewHolder is TaskViewHolder) {
-        val item = taskModules[position]
-        viewHolder.textViewTaskTitle.text = item.title
-        viewHolder.textViewTaskBody.text = item.body
+            val item = taskModules[position]
+            viewHolder.textViewTaskTitle.text = item.title
+            viewHolder.textViewTaskBody.text = item.body
+            viewHolder.itemView.setOnClickListener {
+                action.onClick(taskModules[position])
+            }
         }
     }
 

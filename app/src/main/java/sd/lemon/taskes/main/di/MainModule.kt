@@ -1,4 +1,4 @@
-package sd.lemon.taskes.main.id
+package sd.lemon.taskes.main.di
 
 import dagger.Module
 import dagger.Provides
@@ -9,7 +9,6 @@ import sd.lemon.domain.taskes.TasksRepository
 import sd.lemon.taskes.app.id.PerActivity
 import sd.lemon.taskes.main.MainPresenter
 import sd.lemon.taskes.main.MainView
-import javax.inject.Singleton
 
 @Module
 class MainModule(private val view: MainView) {

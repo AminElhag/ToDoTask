@@ -10,11 +10,27 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import sd.lemon.domain.taskes.models.Task
 import sd.lemon.taskes.R
 import javax.inject.Inject
 
 
 class TaskFragment : Fragment(), TaskView {
+
+    companion object {
+        fun getTaskInstance(task: Task): TaskFragment {
+            val fragment = TaskFragment()
+            val bundle = Bundle()
+
+            bundle.putSerializable("task", task)
+            fragment.arguments = bundle
+            return fragment
+        }
+
+        fun getInstance(): TaskFragment {
+            return TaskFragment()
+        }
+    }
 
     @Inject
     lateinit var presenter: TaskPresenter
@@ -34,6 +50,17 @@ class TaskFragment : Fragment(), TaskView {
         val bodyText = view.findViewById<EditText>(R.id.editTextTaskBody)
         val completeEditButton =
             view.findViewById<FloatingActionButton>(R.id.floatingActionButtonTask)
+
+
+        if (arguments?.containsKey("x") == true) {
+            val serializableTask = requireArguments().getSerializable("") as Task
+            titleText.setText(serializableTask.title)
+            bodyText.setText(serializableTask.body)
+
+            completeEditButton.setOnClickListener {
+                presenter.updateTask(serializableTask)
+            }
+        }
 
         completeEditButton.setOnClickListener {
             presenter.addTask(titleText.text.toString(), bodyText.text.toString())
@@ -72,6 +99,15 @@ class TaskFragment : Fragment(), TaskView {
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.remove(this)
         fragmentTransaction.commit()
+    }
+
+    override fun taskUpdated(task: Task) {
+        view?.let {
+            Snackbar.make(it.findViewById(android.R.id.content),
+                "You update your task status o(≧∀≦)o",
+                Snackbar.LENGTH_LONG).show()
+        }
+        exit()
     }
 
 }

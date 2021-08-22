@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity(), MainView {
     private lateinit var recyclerTaskAdapter: TaskListAdapter
     private lateinit var floatingActionButton: FloatingActionButton
 
-    private val taskFragment = TaskFragment()
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -40,6 +39,11 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun getTasks(taskList: List<Task>) {
         recyclerTaskAdapter = TaskListAdapter(taskList)
+        recyclerTaskAdapter.setOnActionsListener(object :TaskListAdapter.OnActionsListener{
+            override fun onClick(task: Task) {
+                taskFragment(task)
+            }
+        })
     }
 
     override fun getError(throwable: Throwable) {
@@ -55,7 +59,15 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun taskFragment() {
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(android.R.id.content, taskFragment)
+        fragmentTransaction.replace(android.R.id.content, TaskFragment.getInstance())
         fragmentTransaction.commit()
     }
+
+    override fun taskFragment(task: Task) {
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(android.R.id.content, TaskFragment.getTaskInstance(task))
+        fragmentTransaction.commit()
+    }
+
 }

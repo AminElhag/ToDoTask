@@ -7,4 +7,5 @@ interface MainView {
     fun getError(throwable: Throwable)
     fun addTask()
     fun taskFragment()
+    fun taskFragment(task: Task)
 }
