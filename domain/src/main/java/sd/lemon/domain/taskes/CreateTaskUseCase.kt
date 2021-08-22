@@ -6,7 +6,7 @@ import sd.lemon.domain.taskes.models.Task
 
 class CreateTaskUseCase(private val repository: TasksRepository) :
     UseCase<CreateTaskUseCase.Parameters, Task> {
-    class Parameters(val title: String, val body: String, val completed: Boolean) :
+    class Parameters(val title: String, val body: String, val completed: Boolean=false) :
         UseCase.Parameters
 
     override fun execute(parameters: Parameters): Observable<Task> {

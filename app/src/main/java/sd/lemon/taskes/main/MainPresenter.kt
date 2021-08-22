@@ -40,9 +40,6 @@ class MainPresenter(
                 })
     }
 
-    fun showDialog() {
-        view.taskFragment()
-    }
 
     fun deleteTask(task: Task) {
         val subscribe = deleteTaskUseCase.execute(task.id).subscribeOn(Schedulers.io())

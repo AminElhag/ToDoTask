@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Documents/Android_Project_Spase/Taskes/app/src/main/res/drawable/ic_baseline_control_point_24.xml" value="0.3828125" />
         <entry key="..\:/Documents/Android_Project_Spase/Taskes/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Documents/Android_Project_Spase/Taskes/app/src/main/res/layout/activity_task.xml" value="0.3625" />
         <entry key="..\:/Documents/Android_Project_Spase/Taskes/app/src/main/res/layout/fragment_add_task.xml" value="0.36666666666666664" />
         <entry key="..\:/Documents/Android_Project_Spase/Taskes/app/src/main/res/layout/fragment_blank.xml" value="0.36666666666666664" />
         <entry key="..\:/Documents/Android_Project_Spase/Taskes/app/src/main/res/layout/shimmer_list.xml" value="0.36666666666666664" />

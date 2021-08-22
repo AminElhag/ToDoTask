@@ -1,5 +1,6 @@
 package sd.lemon.taskes.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
@@ -12,7 +13,7 @@ import sd.lemon.taskes.R
 import sd.lemon.taskes.app.App
 import sd.lemon.taskes.main.di.DaggerMainComponent
 import sd.lemon.taskes.main.di.MainModule
-import sd.lemon.taskes.newTask.TaskFragment
+import sd.lemon.taskes.newTask.TaskActivity
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainView {
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
         presenter.getTask()
         floatingActionButton.setOnClickListener {
-            presenter.showDialog()
+            startActivity(Intent(applicationContext, TaskActivity::class.java))
         }
 
     }
@@ -52,7 +53,9 @@ class MainActivity : AppCompatActivity(), MainView {
         recyclerTaskAdapter = TaskListAdapter(taskList)
         recyclerTaskAdapter.setOnActionsListener(object : TaskListAdapter.OnActionsListener {
             override fun onClick(task: Task) {
-                taskFragment(task)
+                startActivity(Intent(applicationContext, TaskActivity::class.java).apply {
+                    putExtra("task", task)
+                })
             }
 
             override fun onLongClick(task: Task) {
@@ -69,20 +72,6 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun addTask() {
         TODO("Not yet implemented")
-    }
-
-    override fun taskFragment() {
-        val fragmentManager: FragmentManager = supportFragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(android.R.id.content, TaskFragment.getInstance())
-        fragmentTransaction.commit()
-    }
-
-    override fun taskFragment(task: Task) {
-        val fragmentManager: FragmentManager = supportFragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(android.R.id.content, TaskFragment.getTaskInstance(task))
-        fragmentTransaction.commit()
     }
 
     override fun deleteTask() {

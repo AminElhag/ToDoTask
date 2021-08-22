@@ -19,7 +19,7 @@ class TaskPresenter(
             view.empty()
         }
         val subscribe =
-            createTaskUseCase.execute(CreateTaskUseCase.Parameters(title, body, completed = false))
+            createTaskUseCase.execute(CreateTaskUseCase.Parameters(title, body, false))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe({
                     view.addTask()
