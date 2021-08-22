@@ -1,4 +1,4 @@
-package sd.lemon.taskes.newTask
+package sd.lemon.taskes.newtask
 
 import sd.lemon.domain.taskes.models.Task
 

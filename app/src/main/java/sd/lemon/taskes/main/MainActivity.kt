@@ -3,8 +3,6 @@ package sd.lemon.taskes.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -13,7 +11,7 @@ import sd.lemon.taskes.R
 import sd.lemon.taskes.app.App
 import sd.lemon.taskes.main.di.DaggerMainComponent
 import sd.lemon.taskes.main.di.MainModule
-import sd.lemon.taskes.newTask.TaskActivity
+import sd.lemon.taskes.newtask.TaskActivity
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainView {

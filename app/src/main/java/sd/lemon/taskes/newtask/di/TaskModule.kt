@@ -1,4 +1,4 @@
-package sd.lemon.taskes.newTask.di
+package sd.lemon.taskes.newtask.di
 
 import dagger.Module
 import dagger.Provides
@@ -7,8 +7,8 @@ import sd.lemon.domain.taskes.CreateTaskUseCase
 import sd.lemon.domain.taskes.TasksRepository
 import sd.lemon.domain.taskes.UpdateTaskUseCase
 import sd.lemon.taskes.app.id.PerActivity
-import sd.lemon.taskes.newTask.TaskPresenter
-import sd.lemon.taskes.newTask.TaskView
+import sd.lemon.taskes.newtask.TaskPresenter
+import sd.lemon.taskes.newtask.TaskView
 
 @Module
 class TaskModule(private val view: TaskView) {

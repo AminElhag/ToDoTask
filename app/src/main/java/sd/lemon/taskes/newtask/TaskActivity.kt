@@ -1,19 +1,17 @@
-package sd.lemon.taskes.newTask
+package sd.lemon.taskes.newtask
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import sd.lemon.domain.taskes.models.Task
 import sd.lemon.taskes.R
 import sd.lemon.taskes.app.App
 import sd.lemon.taskes.main.MainActivity
-import sd.lemon.taskes.newTask.di.DaggerTaskComponent
-import sd.lemon.taskes.newTask.di.TaskModule
+import sd.lemon.taskes.newtask.di.DaggerTaskComponent
+import sd.lemon.taskes.newtask.di.TaskModule
 import javax.inject.Inject
 
 class TaskActivity : AppCompatActivity(), TaskView {

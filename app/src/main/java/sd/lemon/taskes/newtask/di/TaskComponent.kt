@@ -1,9 +1,9 @@
-package sd.lemon.taskes.newTask.di
+package sd.lemon.taskes.newtask.di
 
 import dagger.Component
 import sd.lemon.taskes.app.id.AppComponent
 import sd.lemon.taskes.app.id.PerActivity
-import sd.lemon.taskes.newTask.TaskActivity
+import sd.lemon.taskes.newtask.TaskActivity
 
 @Component(modules = [TaskModule::class], dependencies = [AppComponent::class])
 @PerActivity

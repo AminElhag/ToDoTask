@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Taskes">
         <activity
-            android:name=".newTask.TaskActivity"
+            android:name=".newtask.TaskActivity"
             android:exported="true" />
         <activity android:name=".main.MainActivity">
             <intent-filter>

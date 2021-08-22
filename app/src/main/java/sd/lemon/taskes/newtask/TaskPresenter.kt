@@ -1,4 +1,4 @@
-package sd.lemon.taskes.newTask
+package sd.lemon.taskes.newtask
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
