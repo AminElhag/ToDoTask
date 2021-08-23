@@ -20,11 +20,11 @@ class TaskActivity : AppCompatActivity(), TaskView {
     @Inject
     lateinit var presenter: TaskPresenter
 
-    lateinit var titleText: EditText
-    lateinit var bodyText: EditText
+    private lateinit var titleText: EditText
+    private lateinit var bodyText: EditText
 
-    lateinit var titleNewText: String
-    lateinit var bodyNewText: String
+    private lateinit var titleNewText: String
+    private lateinit var bodyNewText: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +53,7 @@ class TaskActivity : AppCompatActivity(), TaskView {
                 presenter.updateTask(Task(bundle.id,
                     titleText.text.toString(),
                     bodyText.text.toString(),
-                    bundle.completed))
+                    true))
             }
         } else {
             completeEditButton.setOnClickListener {
