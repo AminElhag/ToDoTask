@@ -7,8 +7,8 @@ import sd.lemon.domain.taskes.models.Task
 
 class MemoryImp : TasksRepository {
 
-    var tasks: MutableList<Task> = mutableListOf()
-    var id: Int = 0
+    private var tasks: MutableList<Task> = mutableListOf()
+    private var id: Int = 0
 
 
     override fun getTasks(parameters: GetTasksUseCase.Parameters): Observable<List<Task>> {
@@ -27,16 +27,28 @@ class MemoryImp : TasksRepository {
     }
 
     override fun deleteTask(id: Int): Completable {
-        tasks.removeAt(id)
-        return Completable.complete()
+        val index = tasks.indexOfFirst { it.id == id }
+        return if (index > -1) {
+            tasks.removeAt(index)
+            Completable.complete()
+        } else {
+            Completable.error(Throwable("Item not found"))
+        }
     }
 
     override fun updateTask(parameters: UpdateTaskUseCase.Parameters): Observable<Task> {
-        tasks[parameters.id] = Task(title = parameters.title,
-            body = parameters.body,
-            completed = parameters.completed,
-            id = parameters.id
-        )
-        return Observable.just(tasks[parameters.id])
+        val task = tasks.firstOrNull { it.id == id }
+        if (task != null){
+            task.apply {
+                title = parameters.title
+                body = parameters.body
+                completed = parameters.completed
+            }
+
+            tasks[tasks.indexOfFirst { it.id == parameters.id }] = task
+            return Observable.just(task)
+        }else{
+            return Observable.error(Throwable("item not found"))
+        }
     }
 }

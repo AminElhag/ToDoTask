@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import sd.lemon.domain.taskes.models.Task
 import sd.lemon.taskes.R
 
-class TaskListAdapter(private val taskModules: List<Task>) :
+class TaskListAdapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -41,14 +41,14 @@ class TaskListAdapter(private val taskModules: List<Task>) :
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         //TODO Shimmer view
         if (viewHolder is TaskViewHolder) {
-            val item = taskModules[position]
+            val item = items[position]!!
             viewHolder.textViewTaskTitle.text = item.title
             viewHolder.textViewTaskBody.text = item.body
             viewHolder.itemView.setOnClickListener {
-                action.onClick(taskModules[position])
+                action.onClick(items[position]!!)
             }
             viewHolder.itemView.setOnLongClickListener {
-                action.onLongClick(taskModules[position])
+                action.onLongClick(items[position]!!)
 
                 return@setOnLongClickListener true
             }
@@ -67,9 +67,15 @@ class TaskListAdapter(private val taskModules: List<Task>) :
     }
 
     override fun getItemCount(): Int {
-        return taskModules.size
+        return items.size
     }
 
+    fun setData(data: List<Task>){
+        this.items.clear()
+        notifyDataSetChanged()
+        this.items.addAll(data)
+        notifyDataSetChanged()
+    }
 
     class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textViewTaskTitle: TextView = view.findViewById(R.id.textViewTaskTitle)
@@ -82,4 +88,6 @@ class TaskListAdapter(private val taskModules: List<Task>) :
         fun onClick(task: Task)
         fun onLongClick(task: Task)
     }
+
+
 }

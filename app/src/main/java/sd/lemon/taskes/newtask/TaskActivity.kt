@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.EditText
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import org.w3c.dom.Text
 import sd.lemon.domain.taskes.models.Task
 import sd.lemon.taskes.R
 import sd.lemon.taskes.app.App
@@ -19,13 +20,19 @@ class TaskActivity : AppCompatActivity(), TaskView {
     @Inject
     lateinit var presenter: TaskPresenter
 
+    lateinit var titleText: EditText
+    lateinit var bodyText: EditText
+
+    lateinit var titleNewText: String
+    lateinit var bodyNewText: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
 
-        val titleText = findViewById<EditText>(R.id.editTextTaskTitle)
-        val bodyText = findViewById<EditText>(R.id.editTextTaskBody)
+        titleText = findViewById(R.id.editTextTaskTitle)
+        bodyText = findViewById(R.id.editTextTaskBody)
         val completeEditButton =
             findViewById<FloatingActionButton>(R.id.floatingActionButtonTask)
 
@@ -35,10 +42,26 @@ class TaskActivity : AppCompatActivity(), TaskView {
             .build()
             .inject(this)
 
+        if (intent.hasExtra("task")) {
+            val bundle = intent.getSerializableExtra("task") as Task
+            titleText.setText(bundle.title)
+            bodyText.setText(bundle.body)
+            completeEditButton.setOnClickListener {
+                titleNewText = titleText.text.toString()
+                bodyNewText = bodyText.text.toString()
 
+                presenter.updateTask(Task(bundle.id,
+                    titleText.text.toString(),
+                    bodyText.text.toString(),
+                    bundle.completed))
+            }
+        } else {
+            completeEditButton.setOnClickListener {
+                titleNewText = titleText.text.toString()
+                bodyNewText = bodyText.text.toString()
 
-        completeEditButton.setOnClickListener {
-            presenter.addTask(titleText.text.toString(), bodyText.text.toString())
+                presenter.addTask(titleText.text.toString(), bodyText.text.toString())
+            }
         }
     }
 
@@ -46,7 +69,12 @@ class TaskActivity : AppCompatActivity(), TaskView {
         Snackbar.make(findViewById(android.R.id.content),
             "You add new task Good Luke o(≧∀≦)o",
             Snackbar.LENGTH_LONG).show()
-        exit()
+
+        titleText.setText(titleNewText)
+        bodyText.setText(bodyNewText)
+
+
+        //exit()
     }
 
     override fun getError(throwable: Throwable) {
@@ -59,7 +87,7 @@ class TaskActivity : AppCompatActivity(), TaskView {
         Snackbar.make(findViewById(android.R.id.content),
             "Can't create a empty taskヾ(￣▽￣) Bye~Bye~",
             Snackbar.LENGTH_LONG).show()
-        exit()
+        //exit()
     }
 
     override fun exit() {

@@ -1,8 +1,8 @@
 package sd.lemon.taskes.main.di
 
 import dagger.Component
-import sd.lemon.taskes.app.id.AppComponent
-import sd.lemon.taskes.app.id.PerActivity
+import sd.lemon.taskes.app.di.AppComponent
+import sd.lemon.taskes.app.di.PerActivity
 import sd.lemon.taskes.main.MainActivity
 
 @Component(modules = [MainModule::class], dependencies = [AppComponent::class])

@@ -7,18 +7,13 @@ import sd.lemon.domain.taskes.CreateTaskUseCase
 import sd.lemon.domain.taskes.DeleteTaskUseCase
 import sd.lemon.domain.taskes.GetTasksUseCase
 import sd.lemon.domain.taskes.TasksRepository
-import sd.lemon.taskes.app.id.PerActivity
+import sd.lemon.taskes.app.di.PerActivity
 import sd.lemon.taskes.main.MainPresenter
 import sd.lemon.taskes.main.MainView
+import javax.inject.Singleton
 
 @Module
 class MainModule(private val view: MainView) {
-
-    @Provides
-    @PerActivity
-    fun provideTasksRepository(): TasksRepository =
-        MemoryImp()
-
 
     @Provides
     @PerActivity

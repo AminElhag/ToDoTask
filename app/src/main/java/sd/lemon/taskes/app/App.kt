@@ -1,8 +1,8 @@
 package sd.lemon.taskes.app
 
 import android.app.Application
-import sd.lemon.taskes.app.id.AppComponent
-import sd.lemon.taskes.app.id.DaggerAppComponent
+import sd.lemon.taskes.app.di.AppComponent
+import sd.lemon.taskes.app.di.DaggerAppComponent
 import javax.inject.Inject
 
 class App : Application() {

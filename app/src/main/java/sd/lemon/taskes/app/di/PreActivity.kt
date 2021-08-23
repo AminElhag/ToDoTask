@@ -1,4 +1,4 @@
-package sd.lemon.taskes.app.id
+package sd.lemon.taskes.app.di
 
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy

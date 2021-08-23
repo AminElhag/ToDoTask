@@ -3,6 +3,7 @@ package sd.lemon.taskes.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), MainView {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var recyclerTaskAdapter: TaskListAdapter
+    private val recyclerTaskAdapter: TaskListAdapter = TaskListAdapter()
     private lateinit var floatingActionButton: FloatingActionButton
 
 
@@ -40,15 +41,14 @@ class MainActivity : AppCompatActivity(), MainView {
             .inject(this)
 
 
-        presenter.getTask()
+        initRecycler()
         floatingActionButton.setOnClickListener {
             startActivity(Intent(applicationContext, TaskActivity::class.java))
         }
 
     }
 
-    override fun getTasks(taskList: List<Task>) {
-        recyclerTaskAdapter = TaskListAdapter(taskList)
+    private fun initRecycler() {
         recyclerTaskAdapter.setOnActionsListener(object : TaskListAdapter.OnActionsListener {
             override fun onClick(task: Task) {
                 startActivity(Intent(applicationContext, TaskActivity::class.java).apply {
@@ -60,6 +60,18 @@ class MainActivity : AppCompatActivity(), MainView {
                 presenter.deleteTask(task)
             }
         })
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = recyclerTaskAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.getTask()
+
+    }
+
+    override fun getTasks(taskList: List<Task>) {
+        recyclerTaskAdapter.setData(taskList)
     }
 
     override fun getError(throwable: Throwable) {
@@ -76,6 +88,8 @@ class MainActivity : AppCompatActivity(), MainView {
         Snackbar.make(findViewById(android.R.id.content),
             "Task delete ╯︿╰",
             Snackbar.LENGTH_LONG).show()
+
+        presenter.getTask()
     }
 
     override fun onDestroy() {
